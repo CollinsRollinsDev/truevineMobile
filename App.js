@@ -1,21 +1,33 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import React from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  Linking,
+  TextInput,
+} from "react-native";
+import { useState } from "react";
+import Lunch from './components/Lunch/Lunch.js'
+import Login from './components/Auth/Login'
+import HomePage from "./components/Landing/HomePage.js";
+
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View style={styles.main}>
+        <Lunch />
+        {/* <Login /> */}
+        {/* <HomePage /> */}
+
     </View>
   );
 }
-
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+  main:{
+    paddingTop: 30,
+    width: "100%",
+    height: "100%"
+  }
 });
