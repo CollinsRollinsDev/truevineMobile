@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   },
   upperContainer:{
     height: '40%',
-    backgroundColor: '#bd3508',
+    backgroundColor: '#3464eb',
     opacity: 0.8,
     position: 'relative',
   },

@@ -16,7 +16,7 @@ import {
 const About = () => {
   return (
     <View style={styles.body}>
-      <Header name="About" />
+      <Header name="About" leftSide="menu" />
       <ScrollView>
       <View style={styles.imgView}>
         <Image
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     // flex: 1,
     // justifyContent: 'center',
     // alignItems: 'center',
-    backgroundColor: "#bd3508",
+    backgroundColor: "#3464eb",
     width: "100%",
     // paddingBottom: 30,
   },

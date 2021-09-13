@@ -9,7 +9,7 @@ import {
   TextInput,
 } from "react-native";
 
-const Header = ({name}) => {
+const Header = ({name, leftSide}) => {
     return (
         <View style={styles.headerBody}>
             <View style={styles.left}>
@@ -23,7 +23,7 @@ const Header = ({name}) => {
             </View>
 
             <View style={styles.right}>
-                <Text>Menu</Text>
+                <Text>{leftSide}</Text>
             </View>
         </View>
     )
@@ -37,10 +37,12 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#bd3508',
+        backgroundColor: '#3464eb',
         flexDirection: 'row',
         height: 60,
         width: '100%',
+        borderBottomWidth: 1,
+        borderBottomColor: '#bdc1c9'
 
     },
     left: {

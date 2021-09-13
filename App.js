@@ -9,19 +9,20 @@ import {
   TextInput,
 } from "react-native";
 import { useState } from "react";
-import Lunch from './components/Lunch/Lunch.js'
-import Login from './components/Auth/Login'
+import Lunch from './components/Lunch/Lunch.js';
+import Login from './components/Auth/Login';
 import HomePage from "./components/Landing/HomePage.js";
 import About from "./components/Landing/Nested/About.js";
+import Bible from "./components/Landing/Nested/Bible.js";
 
-
-export default function App() {
+export default function App(){
   return (
     <View style={styles.main}>
         {/* <Lunch /> */}
         {/* <Login /> */}
-        <HomePage />
+        {/* <HomePage /> */}
         {/* <About /> */}
+        <Bible />
 
     </View>
   );
