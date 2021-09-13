@@ -20,8 +20,8 @@ export default function App() {
     <View style={styles.main}>
         {/* <Lunch /> */}
         {/* <Login /> */}
-        {/* <HomePage /> */}
-        <About />
+        <HomePage />
+        {/* <About /> */}
 
     </View>
   );
