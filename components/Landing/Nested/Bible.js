@@ -177,23 +177,29 @@ const Bible = ({}) => {
 
                 </View>
 
-                <Text style={styles.verseDecleartion}>Verses</Text>
+                {
+                  !displayChapters ? <Text style={styles.verseDecleartion}>Verses</Text> : null
+                }
                 <View style={styles.verseArea}>
                 
-                    <TouchableOpacity style={styles.individualVerses}>
-                    <FlatList
-                            contentContainerStyle={styles.grid}
-                            numColumns={4}
-                            // data={props.items}
-                            // keyExtractor={(item, index) => index.toString()}
-                            renderItem={({ item }) => {
-                            console.log(item);
-                            return <Text style={styles.numbers}>{item.chapter}</Text>
-                            }
-                            }
-                    />
-                        <Text style={styles.numbers}>1</Text>
-                    </TouchableOpacity>
+                   {
+                     !displayChapters ? 
+                     <FlatList
+                     contentContainerStyle={styles.grid}
+                     numColumns={4}
+                     // data={props.items}
+                     // keyExtractor={(item, index) => index.toString()}
+                     renderItem={({ item }) => (
+                     // console.log(item)
+                     <TouchableOpacity onPress={() => handleChapterPress(item.chapter)} style={styles.individualVerses}>
+                         <Text style={styles.numbers}>{item.chapter}</Text>
+                     </TouchableOpacity>
+                     )
+                     }
+             />
+             : null
+                   }
+                       
 
                 </View>
                 </ScrollView>
