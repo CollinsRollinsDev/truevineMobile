@@ -37,6 +37,7 @@ const Bible = ({}) => {
     const [userPickedOld, setUserPickedOld] = useState();
     const [selectedChapter, setSelectedChapter] = useState()
     const [displayChapters, setDisplayChapters] = useState(true);
+    const [verseArr, setVerseArr] = useState();
 
 
     const oldTestament = scriptures[0].oldTestament;
@@ -61,20 +62,25 @@ const Bible = ({}) => {
     setDisplayChapters(true);
     }, [selectedBook])
 
-    const getVerses = async() => {
+    const getVerses = async(e) => {
+      // await e++;
+      // await e.toString();
         const toFilter = await userPickedOld;
        const filtered = await toFilter.filter((each) => each.chapter == selectedChapter)
-      //  console.log(toFilter);
-       console.log(filtered);
+       await setVerseArr(filtered);
+       console.log(verseArr)
+
     }
 
     useEffect(() => {
-      !displayChapters ? getVerses() : null
+      // !displayChapters ? getVerses(selectedChapter) : null
     },[userPickedOld, selectedChapter])
 
 
     const handleChapterPress = async(e) => {
+      // setSelectedChapter(parseInt(e) + 1)
       setSelectedChapter(e)
+      console.log(selectedChapter)
       setDisplayChapters(false)
     }
 
@@ -157,9 +163,10 @@ const Bible = ({}) => {
                 <ScrollView>
                 <View style={styles.verseArea}>
                 
-                    
+{/*                     
                {
-                 displayChapters ?    <FlatList
+                 displayChapters ?     */}
+                 <FlatList
                  contentContainerStyle={styles.grid}
                  numColumns={4}
                  data={userPickedOld}
@@ -171,8 +178,9 @@ const Bible = ({}) => {
                    
                  )
                  }
-         /> : null
-               }
+         /> 
+        {/* //  : null
+        //        } */}
                     
 
                 </View>
