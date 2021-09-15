@@ -1,8 +1,9 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "../../Header/Header";
 // import { SearchBar } from 'react-native-elements';
 import {Picker} from '@react-native-picker/picker';
+import scriptures from '../../../assets/bibleKJV.json';
 
 import {
   StyleSheet,
@@ -12,7 +13,11 @@ import {
   Linking,
   Image,
   TextInput,
+  TouchableOpacity,
   ScrollView,
+  FlatList,
+  SafeAreaView,
+  LogBox,
  
 } from "react-native";
 
@@ -21,13 +26,64 @@ const updateSearch = () => {
 }
 
 const Bible = ({}) => {
+
+  useEffect(() => {
+    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+}, [])
+
+    // console.log(scriptures);
     const [search, updateSearch] = useState('');
-    const [selectedBook, setSelectedBook] = useState();
+    const [selectedBook, setSelectedBook] = useState("Ruth");
+    const [userPickedOld, setUserPickedOld] = useState();
+    const [selectedChapter, setSelectedChapter] = useState()
+    const [displayChapters, setDisplayChapters] = useState(true);
+
+
+    const oldTestament = scriptures[0].oldTestament;
+    // const oldTestament = scriptures[0].books[0].oldTestament;
+
+    const filterBookPicked = async(e) => {
+      
+      const bibleArr = await Object.entries(oldTestament);
+      const filteredArr = await bibleArr.filter(function([key, value]){
+        return key === e;
+      });
+
+      setUserPickedOld(filteredArr[0][1].chapters)
+      // console.log(filteredArr[0][1].chapters)
+      const newObj = await Object.fromEntries(filteredArr);
+      // console.log(newObj)
+
+   }
+
+    useEffect(() => {
+    filterBookPicked(selectedBook);
+    setDisplayChapters(true);
+    }, [selectedBook])
+
+    const getVerses = async() => {
+        const toFilter = await userPickedOld;
+       const filtered = await toFilter.filter((each) => each.chapter == selectedChapter)
+      //  console.log(toFilter);
+       console.log(filtered);
+    }
+
+    useEffect(() => {
+      !displayChapters ? getVerses() : null
+    },[userPickedOld, selectedChapter])
+
+
+    const handleChapterPress = async(e) => {
+      setSelectedChapter(e)
+      setDisplayChapters(false)
+    }
+
 
 
 
     return (
         <View style={styles.body}>
+          
             <Header name="Bible" leftSide="Search" />
 
             <View style={styles.top}>
@@ -93,11 +149,59 @@ const Bible = ({}) => {
                  </Picker>
                
                 </View>
-           
+                
+                
+                {
+                  displayChapters ? <Text style={styles.verseDecleartion}>Chapters</Text> : null
+                }
+                <ScrollView>
+                <View style={styles.verseArea}>
+                
+                    
+               {
+                 displayChapters ?    <FlatList
+                 contentContainerStyle={styles.grid}
+                 numColumns={4}
+                 data={userPickedOld}
+                 keyExtractor={(item, index) => index.toString()}
+                 renderItem={({ item }) => (
+                     <TouchableOpacity onPress={() => handleChapterPress(item.chapter)} style={styles.individualVerses}>
+                         <Text style={styles.numbers}>{item.chapter}</Text>
+                     </TouchableOpacity>
+                   
+                 )
+                 }
+         /> : null
+               }
+                    
+
+                </View>
+
+                <Text style={styles.verseDecleartion}>Verses</Text>
+                <View style={styles.verseArea}>
+                
+                    <TouchableOpacity style={styles.individualVerses}>
+                    <FlatList
+                            contentContainerStyle={styles.grid}
+                            numColumns={4}
+                            // data={props.items}
+                            // keyExtractor={(item, index) => index.toString()}
+                            renderItem={({ item }) => {
+                            console.log(item);
+                            return <Text style={styles.numbers}>{item.chapter}</Text>
+                            }
+                            }
+                    />
+                        <Text style={styles.numbers}>1</Text>
+                    </TouchableOpacity>
+
+                </View>
+                </ScrollView>
 
             </View>
-
+           
         </View>
+        
     )
 }
 
@@ -157,6 +261,59 @@ const styles = StyleSheet.create({
           alignItems: 'flex-start',
           paddingLeft: '2%',
 
+      },
+      verseArea: {
+        //   backgroundColor: 'red',
+          height: 'auto',
+          width: '100%',
+          marginBottom: 200,
+          padding: '3%',
+          flexDirection: 'row',
+      },
+      individualVerses: {
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: 50,
+          width: 50,
+        //   borderColor: 'white',
+          borderTopColor: 'transparent',
+          borderLeftColor: 'transparent',
+          borderRightColor: 'transparent',
+          borderBottomColor: 'white',
+          borderWidth: 2,
+          borderRadius: 10,
+          margin: 15,
+      },
+      numbers: {
+          fontSize: 20,
+          color: 'white',
+        //   textShadowColor: 'black',
+        //   textShadowRadius: 10,
+      },
+      verseDecleartion: {
+        textAlign: 'left',
+        marginLeft: '5%',
+        marginBottom: '3%',
+        fontSize: 19,
+        color: 'white',
+        marginTop: 10,
+        fontWeight: 'bold',
+        // position: 'absolute',
+        // zIndex: 1,
+        // top: 0,
+        // right: 0,
+        // bottom: 0,
+        // left: 0,
+      },
+      grid: {
+          flex:1,
+          height: '100%',
+          width : '100%',
+        // marginBottom: 32,
+        marginTop: 16,
+        alignItems: 'center',
+        justifyContent: 'center',
       }
+
 
 })
