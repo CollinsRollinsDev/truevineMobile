@@ -164,9 +164,9 @@ const Bible = ({}) => {
                 <ScrollView>
                 <View style={styles.verseArea}>
                 
-{/*                     
+                    
                {
-                 displayChapters ?     */}
+                 displayChapters ?    
                  <FlatList
                  contentContainerStyle={styles.grid}
                  numColumns={4}
@@ -180,8 +180,8 @@ const Bible = ({}) => {
                  )
                  }
          /> 
-        {/* //  : null
-        //        } */}
+          : null
+                  } 
                     
 
                 </View>
