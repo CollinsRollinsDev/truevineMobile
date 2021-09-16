@@ -37,8 +37,8 @@ const Bible = ({}) => {
     const [userPickedOld, setUserPickedOld] = useState();
     let   [selectedChapter, setSelectedChapter] = useState()
     const [displayChapters, setDisplayChapters] = useState(true);
-    let [verseArr, setVerseArr] = useState();
-
+    let   [verseArr, setVerseArr] = useState();
+    let   [verseSelected, setVerseSelected] = useState(null);
 
     const oldTestament = scriptures[0].oldTestament;
     // const oldTestament = scriptures[0].books[0].oldTestament;
@@ -86,14 +86,14 @@ const Bible = ({}) => {
     }
 
     const handleVersePress = async(e) => {
-      console.log(e);
-      // setSelectedChapter(parseInt(e))
-      // setSelectedChapter(selectedChapter = e)
-      // console.log(selectedChapter)
-      // setDisplayChapters(false)
+      // console.log(e);
+      await setVerseSelected(verseSelected = e)
+      console.log(verseSelected)
     }
 
-
+    useEffect(() => {
+      console.log("Moving to readable page")
+    }, [verseSelected])
 
 
     return (
@@ -205,7 +205,7 @@ const Bible = ({}) => {
                      data={verseArr ? verseArr[0].verses : null}
                      keyExtractor={(item, index) => index.toString()}
                      renderItem={({ item }) => (
-                     // console.log(item)
+                    //  console.log(item.verse)
                      <TouchableOpacity onPress={() => handleVersePress(item.verse)} style={styles.individualVerses}>
                          <Text style={styles.numbers}>{item.verse}</Text>
                      </TouchableOpacity>
@@ -294,15 +294,15 @@ const styles = StyleSheet.create({
       },
 
       verseArea: {
-        //   backgroundColor: 'red',
-          height: 'auto',
+          // backgroundColor: 'red',
+          minHeight: 100,
           width: '100%',
           marginBottom: 300,
           padding: '3%',
           flexDirection: 'row',
           // marginTop: -417,
-          position: 'absolute',
-          top: '20%'
+          position: 'relative',
+          top: '-90%',
       },
 
       individualChapters: {
@@ -366,14 +366,9 @@ const styles = StyleSheet.create({
         color: 'white',
         marginTop: 10,
         fontWeight: 'bold',
-        position: 'absolute',
-        top: '20%',
-        // position: 'absolute',
-        // zIndex: 1,
-        // top: 0,
-        // right: 0,
-        // bottom: 0,
-        // left: 0,
+        position: 'relative',
+        top: '-25%',
+
       },
       grid: {
           flex:1,
