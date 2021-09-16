@@ -18,6 +18,7 @@ import {
   FlatList,
   SafeAreaView,
   LogBox,
+  TouchableWithoutFeedback
  
 } from "react-native";
 
@@ -35,7 +36,7 @@ const Bible = ({}) => {
     const [search, updateSearch] = useState('');
     const [selectedBook, setSelectedBook] = useState("Ruth");
     const [userPickedOld, setUserPickedOld] = useState();
-    const [selectedChapter, setSelectedChapter] = useState()
+    let [selectedChapter, setSelectedChapter] = useState()
     const [displayChapters, setDisplayChapters] = useState(true);
     const [verseArr, setVerseArr] = useState();
 
@@ -78,8 +79,7 @@ const Bible = ({}) => {
 
 
     const handleChapterPress = async(e) => {
-      // setSelectedChapter(parseInt(e) + 1)
-      setSelectedChapter(e)
+     setSelectedChapter(selectedChapter = e)
       console.log(selectedChapter)
       setDisplayChapters(false)
     }
@@ -161,6 +161,8 @@ const Bible = ({}) => {
                   displayChapters ? <Text style={styles.verseDecleartion}>Chapters</Text> : null
                 }
                 <ScrollView>
+                <SafeAreaView>
+
                 <View style={styles.verseArea}>
                 
 {/*                     
@@ -210,8 +212,9 @@ const Bible = ({}) => {
                        
 
                 </View>
+               
+                </SafeAreaView>
                 </ScrollView>
-
             </View>
            
         </View>
