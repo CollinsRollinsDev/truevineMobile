@@ -18,7 +18,6 @@ import {
   FlatList,
   SafeAreaView,
   LogBox,
-  TouchableWithoutFeedback
  
 } from "react-native";
 
@@ -36,7 +35,7 @@ const Bible = ({}) => {
     const [search, updateSearch] = useState('');
     const [selectedBook, setSelectedBook] = useState("Ruth");
     const [userPickedOld, setUserPickedOld] = useState();
-    let [selectedChapter, setSelectedChapter] = useState()
+    let   [selectedChapter, setSelectedChapter] = useState()
     const [displayChapters, setDisplayChapters] = useState(true);
     const [verseArr, setVerseArr] = useState();
 
@@ -79,8 +78,9 @@ const Bible = ({}) => {
 
 
     const handleChapterPress = async(e) => {
-     setSelectedChapter(selectedChapter = e)
-      console.log(selectedChapter)
+      // setSelectedChapter(parseInt(e) + 1)
+      await setSelectedChapter(selectedChapter = e)
+      // console.log(selectedChapter)
       setDisplayChapters(false)
     }
 
@@ -161,8 +161,6 @@ const Bible = ({}) => {
                   displayChapters ? <Text style={styles.verseDecleartion}>Chapters</Text> : null
                 }
                 <ScrollView>
-                <SafeAreaView>
-
                 <View style={styles.verseArea}>
                 
 {/*                     
@@ -212,9 +210,8 @@ const Bible = ({}) => {
                        
 
                 </View>
-               
-                </SafeAreaView>
                 </ScrollView>
+
             </View>
            
         </View>
@@ -283,7 +280,7 @@ const styles = StyleSheet.create({
         //   backgroundColor: 'red',
           height: 'auto',
           width: '100%',
-          marginBottom: 200,
+          marginBottom: 300,
           padding: '3%',
           flexDirection: 'row',
       },
