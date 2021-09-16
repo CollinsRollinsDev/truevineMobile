@@ -69,7 +69,7 @@ const Bible = ({}) => {
        const filtered = await toFilter.filter((each) => each.chapter == e)
       await setVerseArr(verseArr = filtered);
       //  console.log(e)
-       console.log(verseArr)
+       console.log(verseArr[0].verses)
 
     }
 
@@ -83,6 +83,14 @@ const Bible = ({}) => {
       setSelectedChapter(selectedChapter = e)
       console.log(selectedChapter)
       setDisplayChapters(false)
+    }
+
+    const handleVersePress = async(e) => {
+      console.log(e);
+      // setSelectedChapter(parseInt(e))
+      // setSelectedChapter(selectedChapter = e)
+      // console.log(selectedChapter)
+      // setDisplayChapters(false)
     }
 
 
@@ -159,12 +167,11 @@ const Bible = ({}) => {
                 
                 
                 {
-                  displayChapters ? <Text style={styles.verseDecleartion}>Chapters</Text> : null
+                  displayChapters ? <Text style={styles.chapterDecleartion}>Chapters</Text> : null
                 }
                 <ScrollView>
-                <View style={styles.verseArea}>
+                <View style={styles.chapterArea}>
                 
-                    
                {
                  displayChapters ?    
                  <FlatList
@@ -173,7 +180,7 @@ const Bible = ({}) => {
                  data={userPickedOld}
                  keyExtractor={(item, index) => index.toString()}
                  renderItem={({ item }) => (
-                     <TouchableOpacity onPress={() => handleChapterPress(item.chapter)} style={styles.individualVerses}>
+                     <TouchableOpacity onPress={() => handleChapterPress(item.chapter)} style={styles.individualChapters}>
                          <Text style={styles.numbers}>{item.chapter}</Text>
                      </TouchableOpacity>
                    
@@ -182,7 +189,6 @@ const Bible = ({}) => {
          /> 
           : null
                   } 
-                    
 
                 </View>
 
@@ -196,18 +202,18 @@ const Bible = ({}) => {
                      <FlatList
                      contentContainerStyle={styles.grid}
                      numColumns={4}
-                     // data={props.items}
-                     // keyExtractor={(item, index) => index.toString()}
+                     data={verseArr ? verseArr[0].verses : null}
+                     keyExtractor={(item, index) => index.toString()}
                      renderItem={({ item }) => (
                      // console.log(item)
-                     <TouchableOpacity onPress={() => handleChapterPress(item.chapter)} style={styles.individualVerses}>
-                         <Text style={styles.numbers}>{item.chapter}</Text>
+                     <TouchableOpacity onPress={() => handleVersePress(item.verse)} style={styles.individualVerses}>
+                         <Text style={styles.numbers}>{item.verse}</Text>
                      </TouchableOpacity>
                      )
                      }
              />
-             : null
-                   }
+               : null
+                   } 
                        
 
                 </View>
@@ -231,6 +237,7 @@ const styles = StyleSheet.create({
         // alignItems: 'center',
         backgroundColor: "#3464eb",
         width: "100%",
+        height: '100%'
         // paddingBottom: 30,
       },
       top: {
@@ -277,7 +284,7 @@ const styles = StyleSheet.create({
           paddingLeft: '2%',
 
       },
-      verseArea: {
+      chapterArea: {
         //   backgroundColor: 'red',
           height: 'auto',
           width: '100%',
@@ -285,7 +292,20 @@ const styles = StyleSheet.create({
           padding: '3%',
           flexDirection: 'row',
       },
-      individualVerses: {
+
+      verseArea: {
+        //   backgroundColor: 'red',
+          height: 'auto',
+          width: '100%',
+          marginBottom: 300,
+          padding: '3%',
+          flexDirection: 'row',
+          // marginTop: -417,
+          position: 'absolute',
+          top: '20%'
+      },
+
+      individualChapters: {
           justifyContent: 'center',
           alignItems: 'center',
           height: 50,
@@ -299,12 +319,45 @@ const styles = StyleSheet.create({
           borderRadius: 10,
           margin: 15,
       },
+
+      individualVerses: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 50,
+        width: 50,
+      //   borderColor: 'white',
+        borderTopColor: 'transparent',
+        borderLeftColor: 'transparent',
+        borderRightColor: 'transparent',
+        borderBottomColor: 'white',
+        borderWidth: 2,
+        borderRadius: 10,
+        margin: 15,
+    },
+
       numbers: {
           fontSize: 20,
           color: 'white',
         //   textShadowColor: 'black',
         //   textShadowRadius: 10,
       },
+
+      chapterDecleartion: {
+        textAlign: 'left',
+        marginLeft: '5%',
+        marginBottom: '3%',
+        fontSize: 19,
+        color: 'white',
+        marginTop: 10,
+        fontWeight: 'bold',
+        // position: 'absolute',
+        // zIndex: 1,
+        // top: 0,
+        // right: 0,
+        // bottom: 0,
+        // left: 0,
+      },
+
       verseDecleartion: {
         textAlign: 'left',
         marginLeft: '5%',
@@ -313,6 +366,8 @@ const styles = StyleSheet.create({
         color: 'white',
         marginTop: 10,
         fontWeight: 'bold',
+        position: 'absolute',
+        top: '20%',
         // position: 'absolute',
         // zIndex: 1,
         // top: 0,
