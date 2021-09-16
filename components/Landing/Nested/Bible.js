@@ -37,7 +37,7 @@ const Bible = ({}) => {
     const [userPickedOld, setUserPickedOld] = useState();
     let   [selectedChapter, setSelectedChapter] = useState()
     const [displayChapters, setDisplayChapters] = useState(true);
-    const [verseArr, setVerseArr] = useState();
+    let [verseArr, setVerseArr] = useState();
 
 
     const oldTestament = scriptures[0].oldTestament;
@@ -63,24 +63,25 @@ const Bible = ({}) => {
     }, [selectedBook])
 
     const getVerses = async(e) => {
-      // await e++;
+      await e;
       // await e.toString();
         const toFilter = await userPickedOld;
-       const filtered = await toFilter.filter((each) => each.chapter == selectedChapter)
-       await setVerseArr(filtered);
+       const filtered = await toFilter.filter((each) => each.chapter == e)
+      await setVerseArr(verseArr = filtered);
+      //  console.log(e)
        console.log(verseArr)
 
     }
 
     useEffect(() => {
-      // !displayChapters ? getVerses(selectedChapter) : null
+      !displayChapters ? getVerses(selectedChapter) : null
     },[userPickedOld, selectedChapter])
 
 
     const handleChapterPress = async(e) => {
-      // setSelectedChapter(parseInt(e) + 1)
-      await setSelectedChapter(selectedChapter = e)
-      // console.log(selectedChapter)
+      setSelectedChapter(parseInt(e))
+      setSelectedChapter(selectedChapter = e)
+      console.log(selectedChapter)
       setDisplayChapters(false)
     }
 
